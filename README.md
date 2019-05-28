@@ -2,7 +2,7 @@
 An aggregator of the latest news from the most popular game news sites on the internet.
 
 ## Overview and Goals
-With this project, we will create an html scrapper that will aggregate news articles from at least three different high-profile game news sites. We want users to be able to peruse these articles to get an idea of what is in each of them,, visit them, and save them for later.
+With this project, we will create an html scrapper that will aggregate news articles from at least three different high-profile game news sites (Destructoid, Game Informer, and IGN). We want users to be able to peruse these articles to get an idea of what is in each of them,, visit them, and save them for later.
 
 ## Deployment
 This project will be deployed on Heroku as [GameMole](https://gamemole.herokuapp.com).
