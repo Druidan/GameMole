@@ -12,24 +12,34 @@ const db = require('../models');
 //-------------------------------------
 
 router.get('/scrape', function (req, res) {
-    axios.get('https://www.ign.com/articles?tags=news').then(function (ignResponse) {
+    axios.all([
+        axios.get('https://www.ign.com/articles?tags=news'),
+        axios.get('https://www.gameinformer.com/news'),
+        axios.get('https://www.destructoid.com/')
+    ])
+    .then(axios.spread( (ignResponse, giResponse, destResponse) => {
         const ign$ = cheerio.load(ignResponse.data);
+        const gi$ = cheerio.load(giResponse.data);
+        const dest$ = cheerio.load(destResponse.data);
 
-        ign$('div.listElmnt').each(function (i, element) {
+        ign$('div.listElmnt').each( (i, element) => {
             const ignResult = {};
 
             ignResult.title = ign$(element)
+                .find('div.listElmnt-blogItem')
                 .find('a.listElmnt-storyHeadline')
                 .text();
             ignResult.link = ign$(element)
+                .find('div.listElmnt-blogItem')
                 .find('a.listElmnt-storyHeadline')
                 .attr('href');
             ignResult.source = 'IGN';
             sum = ign$(element)
                 .find('p')
-                .text().match(/(?<=-)(.*)(?=Read)/g);
-            ignResult.summary = sum.join(' ').trim();
-                console.log(ignResult)
+                .text()
+                .match(/(?<=-)[\s\S]*(?=Read)/g);
+            ignResult.summary = sum.join('').trim();
+            console.log(ignResult)
 
             // db.Article.create(ignResult)
             //     .then(dbArticle => {
@@ -40,20 +50,49 @@ router.get('/scrape', function (req, res) {
             //         console.log(err);
             //     });
         });
-        res.send('IGN sucessfully scrapped, captain!');
-    }).catch(function (err) {
+
+        gi$('article.node--type-article').each( (i, element) => {
+            const giResult = {};
+
+            giResult.title = gi$(element)
+                .find('span.field--name-title')
+                .text();
+            giResult.link = gi$(element)
+                .find('h2.page-title')
+                .find('a')
+                .attr('href');
+            giResult.source = 'Game Informer';
+            giResult.summary = gi$(element)
+            .find('div.field--name-field-promo-summary')
+            .text();
+            console.log(giResult);
+        })
+
+        dest$('article.smlpost').each( (i, element) => {
+            const destResult = {};
+
+            destResult.title = dest$(element)
+                .find('h2.sparticle_title')
+                .find('a')
+                .text();
+            const newLink = dest$(element)
+                .find('h2.sparticle_title')
+                .find('a')
+                .attr('href');
+            destResult.link = `https://www.destructoid.com/${newLink}`;
+            destResult.source = 'Destructoid';
+            destResult.summary = dest$(element)
+                .find('p')
+                .text();
+            console.log(destResult)
+        })
+
+
+        res.send('IGN sucessfully scrapped, captain!\nGame Informer perfectly pillaged, captain!\nDestructoid ravenously raided, captain!');
+    })).catch(function (err) {
         console.log("We've got a problem, captain!")
         console.log(err);
     });
-
-    // axios.get('https://www.gameinformer.com/').then(function (giResponse) {
-    //     const gi$ = cheerio.load(giResponse.data);
-    // });
-
-    // axios.get('https://www.destructoid.com/').then(function (destResponse) {
-    //     const dest$ = cheerio.load(destResponse.data);
-    // });
-
 });
 
 
