@@ -109,4 +109,3 @@ function objectLength (object) {
     return Object.keys(object).length;
 }
 
-module.exports =elc;
