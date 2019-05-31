@@ -21,25 +21,28 @@ router.get('/scrape', function (req, res) {
         const ign$ = cheerio.load(ignResponse.data);
         const gi$ = cheerio.load(giResponse.data);
         const dest$ = cheerio.load(destResponse.data);
+        let allResults = {};
 
         ign$('div.listElmnt').each( (i, element) => {
+            i = i+1;
             const ignResult = {};
-
-            ignResult.title = ign$(element)
+            ignResult[`ignArticle ${i}`] = {};
+            ignResult[`ignArticle ${i}`].title = ign$(element)
                 .find('div.listElmnt-blogItem')
                 .find('a.listElmnt-storyHeadline')
                 .text();
-            ignResult.link = ign$(element)
+            ignResult[`ignArticle ${i}`].link = ign$(element)
                 .find('div.listElmnt-blogItem')
                 .find('a.listElmnt-storyHeadline')
                 .attr('href');
-            ignResult.source = 'IGN';
+            ignResult[`ignArticle ${i}`].source = 'IGN';
             sum = ign$(element)
                 .find('p')
                 .text()
                 .match(/(?<=-)[\s\S]*(?=Read)/g);
-            ignResult.summary = sum.join('').trim();
-            console.log(ignResult)
+            ignResult[`ignArticle ${i}`].summary = sum.join('').trim();
+            allResults = Object.assign(allResults, ignResult);
+            // console.log(allResults)
 
             // db.Article.create(ignResult)
             //     .then(dbArticle => {
@@ -52,26 +55,29 @@ router.get('/scrape', function (req, res) {
         });
 
         gi$('article.node--type-article').each( (i, element) => {
+            i = i+1;
             const giResult = {};
-
-            giResult.title = gi$(element)
+            giResult[`giArticle ${i}`] = {};
+            giResult[`giArticle ${i}`].title = gi$(element)
                 .find('span.field--name-title')
                 .text();
-            giResult.link = gi$(element)
+            giResult[`giArticle ${i}`].link = gi$(element)
                 .find('h2.page-title')
                 .find('a')
                 .attr('href');
-            giResult.source = 'Game Informer';
-            giResult.summary = gi$(element)
+            giResult[`giArticle ${i}`].source = 'Game Informer';
+            giResult[`giArticle ${i}`].summary = gi$(element)
             .find('div.field--name-field-promo-summary')
             .text();
-            console.log(giResult);
+            // console.log(giResult);
+            allResults = Object.assign(allResults, giResult);
         })
 
         dest$('article.smlpost').each( (i, element) => {
+            i = i+1;
             const destResult = {};
-
-            destResult.title = dest$(element)
+            destResult[`destArticle ${i}`] = {};
+            destResult[`destArticle ${i}`].title = dest$(element)
                 .find('h2.sparticle_title')
                 .find('a')
                 .text();
@@ -79,16 +85,18 @@ router.get('/scrape', function (req, res) {
                 .find('h2.sparticle_title')
                 .find('a')
                 .attr('href');
-            destResult.link = `https://www.destructoid.com/${newLink}`;
-            destResult.source = 'Destructoid';
-            destResult.summary = dest$(element)
+            destResult[`destArticle ${i}`].link = `https://www.destructoid.com/${newLink}`;
+            destResult[`destArticle ${i}`].source = 'Destructoid';
+            destResult[`destArticle ${i}`].summary = dest$(element)
                 .find('p')
                 .text();
-            console.log(destResult)
+            // console.log(destResult)
+            allResults = Object.assign(allResults, destResult);
         })
 
+        // console.log(allResults);
 
-        res.send('IGN sucessfully scrapped, captain!\nGame Informer perfectly pillaged, captain!\nDestructoid ravenously raided, captain!');
+        res.json(allResults);
     })).catch(function (err) {
         console.log("We've got a problem, captain!")
         console.log(err);
@@ -100,9 +108,6 @@ router.get('/scrape', function (req, res) {
 
 // Export routes for server.js to use.
 module.exports = router;
-
-
-
 
 
 
