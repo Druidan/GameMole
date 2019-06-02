@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './styles/App.css'
 import Header from './components/Header';
 import ScrapedArticles from './components/ScrapedArticles';
 
 import Navbar from './components/Navbar';
+import SavedArticles from './components/savedArticles';
 
 //This class was originally written by Maison Moa - Source: 'https://medium.com/@maison.moa/setting-up-an-express-backend-server-for-create-react-app-bc7620b20a61'
 class App extends Component {
@@ -30,11 +31,18 @@ class App extends Component {
 
     render() {
       return (
-        <div>
-          <Navbar />
-          <Header />
-          <ScrapedArticles />
-        </div>
+        <Fragment>
+          <div className='pageTop'>
+            <Navbar />
+            <Header />
+          </div>
+          <div className='savedDiv' id='savedDivId'>
+            <SavedArticles />
+          </div>
+          <div className='scrapedDiv' id='scrapedDivId'>
+            <ScrapedArticles />
+          </div>
+        </Fragment>
       );
     }
 };
