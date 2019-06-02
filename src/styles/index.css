@@ -1,0 +1,23 @@
+/* UNIVERSAL ROOT, DOM, AND GENERAL UTILITY CSS */
+:root {
+    --ELCblack: rgba(25, 25, 25, 1);
+    --ELCblackthin: rgba(25, 25, 25, .7);
+    --ELCwhite: rgba(247, 252, 255, 1);
+    --ELCthinwhite: rgba(247, 252, 255, .4);
+    --ELCsky: rgb(214, 255, 254);
+    --ELCdenim: rgb(74, 112, 156);
+    --ELCnavy: rgb(34, 63, 95);
+    --ELCteal: rgb(11, 228, 224);
+    --ELCtealthin: rgba(139, 232, 230, .7);
+    --ELCgray: rgba(129, 127, 130, 1);
+    --ELCred: rgb(248,36,23);
+    --headFont: 'Philosopher', sans-serif;
+    --utilityFont: 'Bree Serif', serif;
+    --sketchFont: 'Indie Flower', cursive;
+    --speechFont: 'Montserrat Alternates', sans-serif;
+}
+
+.newBody {
+    background-color: var(--ELCblack);
+    color: var(--ELCwhite);
+}

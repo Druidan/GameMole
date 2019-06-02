@@ -11,6 +11,7 @@ const db = require('../models');
 
 //-------------------------------------
 
+//Scraper Router
 router.get('/scrape', function (req, res) {
     axios.all([
         axios.get('https://www.ign.com/articles?tags=news'),
@@ -36,22 +37,14 @@ router.get('/scrape', function (req, res) {
                 .find('a.listElmnt-storyHeadline')
                 .attr('href');
             ignResult[`ignArticle ${i}`].source = 'IGN';
+            ignResult[`ignArticle ${i}`].sourceRef = 'https://www.ign.com';
+            ignResult[`ignArticle ${i}`].logo = 'IGNlogo.png';
             sum = ign$(element)
                 .find('p')
                 .text()
                 .match(/(?<=-)[\s\S]*(?=Read)/g);
             ignResult[`ignArticle ${i}`].summary = sum.join('').trim();
             allResults = Object.assign(allResults, ignResult);
-            // console.log(allResults)
-
-            // db.Article.create(ignResult)
-            //     .then(dbArticle => {
-            //         console.log(dbArticle);
-            //     })
-            //     .catch(function (err) {
-            //         console.log("We've got a problem, captain!")
-            //         console.log(err);
-            //     });
         });
 
         gi$('article.node--type-article').each( (i, element) => {
@@ -66,10 +59,11 @@ router.get('/scrape', function (req, res) {
                 .find('a')
                 .attr('href');
             giResult[`giArticle ${i}`].source = 'Game Informer';
+            giResult[`giArticle ${i}`].sourceRef = 'https://www.gameinformer.com/';
+            giResult[`giArticle ${i}`].logo = 'GIlogo.png';
             giResult[`giArticle ${i}`].summary = gi$(element)
             .find('div.field--name-field-promo-summary')
             .text();
-            // console.log(giResult);
             allResults = Object.assign(allResults, giResult);
         })
 
@@ -87,14 +81,15 @@ router.get('/scrape', function (req, res) {
                 .attr('href');
             destResult[`destArticle ${i}`].link = `https://www.destructoid.com/${newLink}`;
             destResult[`destArticle ${i}`].source = 'Destructoid';
+            destResult[`destArticle ${i}`].sourceRef = 'https://www.destructoid.com/';
+            destResult[`destArticle ${i}`].logo = 'Destlogo.png';
             destResult[`destArticle ${i}`].summary = dest$(element)
                 .find('p')
                 .text();
-            // console.log(destResult)
-            allResults = Object.assign(allResults, destResult);
+            if(destResult[`destArticle ${i}`].title !== ''){
+                allResults = Object.assign(allResults, destResult);
+            }            
         })
-
-        // console.log(allResults);
 
         res.json(allResults);
     })).catch(function (err) {
@@ -103,8 +98,42 @@ router.get('/scrape', function (req, res) {
     });
 });
 
+//-------------------------------------
+
+//Find all articles saved in the database
+router.get('/findSaved', function (req, res) {
+    Article.selectAll(data => {
+        console.log(data)
+        res.json(data);
+    })
+    .catch(function (err) {
+        console.log("We ran into a problem finding the saved articles, captain!")
+        console.log(err);
+    });
+});
+
+//-------------------------------------
+
+//Save an article to the database
+router.post('/saveArt', function (req, res) {
+    db.Article.create(req.body)
+    .then(dbArticle => {
+        console.log(dbArticle);
+        res.end();
+    })
+    .catch(function (err) {
+        console.log("We've got a problem, captain! The save route failed!")
+        console.log(err);
+    });
+});
+
+//-------------------------------------
+
+//Update an article with a new note
 
 
+
+//-------------------------------------
 
 // Export routes for server.js to use.
 module.exports = router;

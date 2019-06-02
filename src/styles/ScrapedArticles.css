@@ -1,0 +1,17 @@
+.Destructoid {
+  border: 1px var(--ELCred) solid;
+}
+
+.Informer {
+  border: 1px var(--ELCteal) solid;
+}
+
+.IGN {
+  border: 1px var(--ELCwhite) solid;
+}
+
+.newsLogo {
+  background-color: var(--ELCwhite);
+  width: 100px;
+}
+

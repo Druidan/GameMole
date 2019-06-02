@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const ArticleSchema = new Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   link: {
     type: String,
@@ -14,13 +15,22 @@ const ArticleSchema = new Schema({
     type: String,
     required: true
   },
+  sourceRef: {
+    type: String,
+    required: true
+  },
+  logo: {
+    type: String,
+    required: true
+  },
   summary: {
     type: String,
     required: true
   },
   note: {
     type: Schema.Types.ObjectId,
-    ref: "Note"
+    ref: "Note",
+    default: null
   }
 });
 
