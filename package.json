@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "An aggregator of the latest news from the most popular game news sites on the internet.",
   "main": "index.js",
+  "engines": {
+    "node": "8.12.0",
+    "npm": "6.4.1"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
