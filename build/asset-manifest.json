@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Druidan/GameMole/static/css/main.1a24ef98.chunk.css",
+    "main.js": "/Druidan/GameMole/static/js/main.b7a1c40d.chunk.js",
+    "main.js.map": "/Druidan/GameMole/static/js/main.b7a1c40d.chunk.js.map",
+    "runtime~main.js": "/Druidan/GameMole/static/js/runtime~main.fab60fea.js",
+    "runtime~main.js.map": "/Druidan/GameMole/static/js/runtime~main.fab60fea.js.map",
+    "static/js/2.0b62ab56.chunk.js": "/Druidan/GameMole/static/js/2.0b62ab56.chunk.js",
+    "static/js/2.0b62ab56.chunk.js.map": "/Druidan/GameMole/static/js/2.0b62ab56.chunk.js.map",
+    "index.html": "/Druidan/GameMole/index.html",
+    "precache-manifest.1d48173fea40b82365a483e681a69698.js": "/Druidan/GameMole/precache-manifest.1d48173fea40b82365a483e681a69698.js",
+    "service-worker.js": "/Druidan/GameMole/service-worker.js",
+    "static/css/main.1a24ef98.chunk.css.map": "/Druidan/GameMole/static/css/main.1a24ef98.chunk.css.map"
+  }
+}
