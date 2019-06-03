@@ -127,6 +127,7 @@ router.get('/scrape', function (req, res) {
 //Find all articles saved in the database
 router.get('/findSaved', function (req, res) {
     db.Article.find({})
+        .populate('notes')
         .then(data => {
             res.json(data);
         })
@@ -138,6 +139,19 @@ router.get('/findSaved', function (req, res) {
 
 //-------------------------------------
 
+//Find all articles saved in the database
+router.get('/findComments', function (req, res) {
+    db.Note.find({})
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            console.log("We ran into a problem finding the comments, captain!")
+            console.log(err);
+        });
+});
+
+//-------------------------------------
 //Save an article to the database
 router.post('/saveArt', function (req, res) {
     db.Article.create(req.body)
@@ -153,7 +167,30 @@ router.post('/saveArt', function (req, res) {
 //-------------------------------------
 
 //Update an article with a new note
-
+router.post('/makeComment', function (req, res) {
+    const comment = {message: req.body.message};
+    const article = req.body.articleId;
+    db.Note.create(comment)
+    .then(dbNote => { 
+        console.log('The comment is away to the database, captain!')
+        console.log(dbNote)
+        db.Article.findOneAndUpdate(
+            {_id: article},
+            { $push: { notes: dbNote._id } },
+        ).then(data => {
+            console.log('Update has been sent to the article, Captain!')
+            res.end();
+        })
+        .catch(err => {
+            console.log("We've got a problem, captain! The update Article route failed!")
+            console.log(err);
+        });
+    })
+    .catch(err => {
+        console.log("We've got a problem, captain! The create comment route failed!")
+        console.log(err);
+    });
+})
 
 
 //-------------------------------------

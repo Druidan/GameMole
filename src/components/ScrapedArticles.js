@@ -54,7 +54,7 @@ export default class ScrapedArticles extends Component {
     }
     if (!hasClass(btnParent, 'savedArt')) {
         const savedDiv = document.getElementById('savedDivId');
-        // savedDiv.append(btnParent);
+        savedDiv.append(btnParent);
         addClass(btnParent, 'savedArt');
         saveIt();
     } else {
