@@ -22,7 +22,7 @@ app.get('/express_backend', (req, res) => {
 })
 
 // Connect to the Mongo DB
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/mongoHeadlines';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://<user>:<moleymoleymoley10>@ds143326.mlab.com:43326/heroku_0r9tgt25';
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true
 }).catch(function (err) {
