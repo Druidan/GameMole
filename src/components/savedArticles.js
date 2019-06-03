@@ -56,7 +56,6 @@ export default class SavedArticles extends Component {
             <article>
             {Object.keys(this.state.allArticles).map(article => { 
                 const thisArticle = this.state.allArticles[article];
-                console.log(thisArticle)
                 return <div key={thisArticle._id} className={`articleDiv ${thisArticle.source} savedArt`} id={thisArticle._id}>
                 <a href={thisArticle.sourceRef} target='_blank' rel='noopener noreferrer'>
                     <img className='newsLogo' src={`./assets/images/${thisArticle.logo}`} alt={`The logo for ${thisArticle.source}`}></img>
