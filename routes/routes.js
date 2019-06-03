@@ -139,7 +139,7 @@ router.get('/findSaved', function (req, res) {
 
 //-------------------------------------
 
-//Find all articles saved in the database
+//Find all comments saved in the database
 router.get('/findComments', function (req, res) {
     db.Note.find({})
         .then(data => {
@@ -212,62 +212,31 @@ router.delete('/delArt', function (req, res) {
 
 //-------------------------------------
 
+//Remove a comment from the database
+
+router.delete('/delComm', function (req, res) {
+    const commentId = { _id: req.body._id };
+    const articleId = { _id: req.body.article};
+    db.Note.findOneAndRemove(commentId)
+    .then(data => {
+        db.Article.findOneAndUpdate(
+            { _id: articleId },
+            { $pull: { notes: req.body._id } }
+        ).then(data => {
+            console.log('The command to delete the comment id has been sent to the article, Captain!')
+            res.end();
+        })
+        .catch(err => {
+            console.log("We've got a problem, captain! The delete comment id from Article route failed!")
+            console.log(err);
+        });
+    })
+    .catch(err => {
+        console.log("We've got a problem, captain! The delete comment route failed!")
+        console.log(err);
+    });
+});
+
+//-------------------------------------
 // Export routes for server.js to use.
 module.exports = router;
-
-
-
-// // BURGER MUNCHER REFERENCE
-// router.get('/', (req, res) => {
-
-//     burger.selectAll(data => {
-//         const handlebarsObj = {
-//             burgers: data
-//         };
-//         res.render('index', handlebarsObj);
-//     });
-
-// });
-
-// //-------------------------------------
-
-// router.post('/api/burgers', (req, res) => {
-//     const newBurger = req.body.name
-//     burger.createBurger(newBurger, (result) => {
-//         res.json({
-//             id: result.insertId
-//         });
-//     });
-
-// });
-
-// //-------------------------------------
-
-// router.put('/api/burgers/:id', (req, res) => {
-
-//     const condition = `id = ${req.params.id}`;
-
-//     burger.updateBurger({
-//         munched: req.body.munched
-//     }, condition, (result) => {
-//         if (result.changedRows === 0) {
-//             // If no rows were changed, then the ID must not exist, so 404
-//             return res.status(404).end();
-//         } else {
-//             res.status(200).end();
-//         }
-//     });
-
-// //-------------------------------------
-// router.delete('/api/burgers/:id', (req, res) => {
-//     const condition = `id = ${req.params.id}`;
-
-//     burger.removeBurger(condition, (result) => {
-//         if (result.affectedRows === 0) {
-//             // If no rows were changed, then the ID must not exist, so 404
-//             return res.status(404).end();
-//         } else {
-//             res.status(200).end();
-//         }
-//     });
-// });

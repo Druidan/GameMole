@@ -28,11 +28,11 @@ export default class DeleteButton extends Component {
             Axios.delete('/delArt', { data: {link: link} })
             .then(res => {
                 say('Delete sent, Captain!');
-                // console.log(res);
+                console.log(res);
             })
             .catch(function (err) {
                 console.log("We've got a problem, captain! The delete failed!")
-                // console.log(err);
+                console.log(err);
             });
             removeClass(btnParent, 'savedArt');
             button.textContent = 'Deleted!'

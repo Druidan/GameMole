@@ -27,13 +27,13 @@ const ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  notes: {
+  notes: [{
     type: Schema.Types.ObjectId,
-    ref: "Notes",
-  }
+    ref: "Note",
+  }]
 });
 
-const Article = mongoose.model("Article", ArticleSchema);
+const Article = mongoose.model("article", ArticleSchema);
 
 // Export the Article model
 module.exports = Article;
