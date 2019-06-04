@@ -32,7 +32,7 @@ const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://<user>:<moleymoleymole
 mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true
 }).catch(function (err) {
-    console.log("We've got a problem, captain!")
+    console.log("We've got a problem with the database, captain!")
     console.log(err);
 });
 
