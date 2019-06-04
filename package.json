@@ -37,8 +37,7 @@
     "react-scripts": "^3.0.1",
     "react-dom": "^16.8.6"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "browserslist": {
     "production": [
       ">0.2%",

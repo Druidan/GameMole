@@ -7,10 +7,14 @@ const routes = require('./routes/routes');
 // Express
 const app = express();
 const PORT = process.env.PORT || 3050;
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
 app.use(express.json());
 app.use(express.static('public'));
-app.use(routes);
+app.use('/', routes);
+
+
 
 // // Handlebars.
 // app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
@@ -18,7 +22,9 @@ app.use(routes);
 
 //This get request was originally written by Maison Moa - Source: "https://medium.com/@maison.moa/setting-up-an-express-backend-server-for-create-react-app-bc7620b20a61"
 app.get('/express_backend', (req, res) => {
-    res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
+    res.send({
+        express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT'
+    });
 })
 
 // Connect to the Mongo DB
@@ -35,5 +41,5 @@ mongoose.connect(MONGODB_URI, {
 
 //I liked the look of Geoff's port notification, so I stoooole it.
 app.listen(PORT, () => {
-	console.log(`==> 🌎  Listening on port ${PORT}.`);
+    console.log(`==> 🌎  Listening on port ${PORT}.`);
 });
