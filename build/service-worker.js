@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Druidan/GameMole/precache-manifest.1d48173fea40b82365a483e681a69698.js"
+  "/Druidan/GameMole/precache-manifest.1199f21e1370f789170179061e0dd612.js"
 );
 
 self.addEventListener('message', (event) => {
