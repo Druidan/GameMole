@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import './styles/App.css'
-import Header from './components/Header';
-import ScrapedArticles from './components/ScrapedArticles';
+import '../styles/App.css'
+import Header from './Header';
+import ScrapedArticles from './ScrapedArticles';
 
-import Navbar from './components/Navbar';
-import SavedArticles from './components/savedArticles';
+import Navbar from './Navbar';
+import SavedArticles from './savedArticles';
 
 //This class was originally written by Maison Moa - Source: 'https://medium.com/@maison.moa/setting-up-an-express-backend-server-for-create-react-app-bc7620b20a61'
 class App extends Component {
