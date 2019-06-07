@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const routes = require('./routes/routes');
+const path = require("path")
 
 // Express
 const app = express();
@@ -12,12 +13,12 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.use('/', routes);
+
 if (process.env.NODE_ENV = 'development') {
     app.use(express.static('public'));
 } else if (process.env.NODE_ENV = 'production') {
-    app.use(express.static('build'));
+    app.use(express.static(path.join(__dirname,'build')));
 }
-
 
 //This get request was originally written by Maison Moa - Source: "https://medium.com/@maison.moa/setting-up-an-express-backend-server-for-create-react-app-bc7620b20a61"
 app.get('/express_backend', (req, res) => {
@@ -35,8 +36,9 @@ mongoose.connect(MONGODB_URI, {
     console.log(err);
 });
 
-
-
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 //I liked the look of Geoff's port notification, so I stoooole it.
 app.listen(PORT, () => {
