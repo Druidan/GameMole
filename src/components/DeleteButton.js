@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import '../styles/buttons.css';
-import {addClass, hasClass, say, removeClass} from '../utilities/elcFunctions';
+import {hasClass, say, removeClass} from '../utilities/elcFunctions';
 import Axios from 'axios';
 
 export default class DeleteButton extends Component {

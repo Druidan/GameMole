@@ -3,7 +3,7 @@ import '../styles/articles.css';
 import Axios from 'axios';
 import DeleteButton from './DeleteButton';
 import CommentingDiv from './commentingDiv';
-import { q, say } from '../utilities/elcFunctions';
+import { say } from '../utilities/elcFunctions';
 
 
 export default class SavedArticles extends Component {
