@@ -11,9 +11,12 @@ const db = require('../models');
 
 //-------------------------------------
 
+//Database health check.
 router.get('/healthcheck', function (req, res) {
     res.send('healthy!');
-})
+});
+
+//-------------------------------------
 
 //Scraper Router
 router.get('/scrape', function (req, res) {
